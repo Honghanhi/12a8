@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đà Lạt - Thành Phố Ngàn Hoa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌸</span>
+                <span class="logo-text">Đà Lạt Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Trang Chủ</a></li>
+                <li><a href="#about" class="nav-link">Giới Thiệu</a></li>
+                <li><a href="#services" class="nav-link">Dịch Vụ</a></li>
+                <li><a href="#contact" class="nav-link">Liên Hệ</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section home-section">
+        <div class="hero-content">
+            <h1 class="hero-title fade-in">Đà Lạt</h1>
+            <p class="hero-subtitle fade-in-delay">Thành Phố Ngàn Hoa - Thiên Đường Miền Trung</p>
+            <p class="hero-description fade-in-delay-2">
+                Khám phá vẻ đẹp thơ mộng của Đà Lạt với những thung lũng hoa rực rỡ, 
+                khí hậu mát mẻ quanh năm và những trải nghiệm du lịch đáng nhớ
+            </p>
+            <div class="hero-buttons fade-in-delay-3">
+                <button class="btn btn-primary" onclick="scrollToSection('services')">
+                    Khám Phá Ngay
+                    <span class="btn-icon">→</span>
+                </button>
+                <button class="btn btn-secondary" onclick="scrollToSection('contact')">
+                    Liên Hệ Tư Vấn
+                    <span class="btn-icon">📞</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Hero Image Placeholder -->
+        <!-- Replace with actual image: A beautiful landscape of Da Lat with flowers and hills -->
+        <div class="hero-image-placeholder">
+            <div class="placeholder-content">
+                <span class="placeholder-icon">🏔️🌺</span>
+                <p>Banner: Cảnh đẹp Đà Lạt với hoa và đồi núi</p>
+            </div>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="feature-cards">
+            <div class="feature-card card-3d">
+                <div class="feature-icon">🌡️</div>
+                <h3>Khí Hậu Mát Mẻ</h3>
+                <p>Nhiệt độ 15-24°C quanh năm</p>
+            </div>
+            <div class="feature-card card-3d">
+                <div class="feature-icon">🌸</div>
+                <h3>Thung Lũng Hoa</h3>
+                <p>Hàng triệu bông hoa đua nở</p>
+            </div>
+            <div class="feature-card card-3d">
+                <div class="feature-icon">🏰</div>
+                <h3>Kiến Trúc Độc Đáo</h3>
+                <p>Phong cách Pháp cổ điển</p>
+            </div>
+            <div class="feature-card card-3d">
+                <div class="feature-icon">☕</div>
+                <h3>Văn Hóa Cafe</h3>
+                <p>Những quán cafe view đẹp</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <h2 class="section-title scroll-animate">Giới Thiệu Về Đà Lạt</h2>
+            <p class="section-subtitle scroll-animate">Khám phá thành phố ngàn hoa với lịch sử và văn hóa độc đáo</p>
+            
+            <div class="about-content">
+                <div class="about-grid">
+                    <!-- History Card -->
+                    <div class="about-card card-3d scroll-animate">
+                        <div class="about-card-header">
+                            <span class="about-icon">📜</span>
+                            <h3>Lịch Sử Hình Thành</h3>
+                        </div>
+                        <p>
+                            Đà Lạt được người Pháp phát hiện vào năm 1893 và phát triển thành 
+                            một thành phố nghỉ dưỡng cao cấp. Tên gọi "Đà Lạt" xuất phát từ 
+                            tiếng Lat "Đà Lạch", có nghĩa là dòng sông của người Lạch.
+                        </p>
+                        <p>
+                            Với độ cao 1,500m so với mặt nước biển, Đà Lạt được mệnh danh là 
+                            "Le Petit Paris" - Paris thu nhỏ của Việt Nam với kiến trúc Pháp 
+                            độc đáo còn lưu giữ đến ngày nay.
+                        </p>
+                    </div>
+
+                    <!-- Climate Card -->
+                    <div class="about-card card-3d scroll-animate">
+                        <div class="about-card-header">
+                            <span class="about-icon">🌤️</span>
+                            <h3>Khí Hậu & Thời Tiết</h3>
+                        </div>
+                        <p>
+                            Đà Lạt sở hữu khí hậu cận nhiệt đới ôn hòa, mát mẻ quanh năm 
+                            với nhiệt độ trung bình từ 15-24°C. Đây là điều kiện lý tưởng 
+                            để trồng hoa, rau và cây ăn quả ôn đới.
+                        </p>
+                        <p>
+                            Mùa khô kéo dài từ tháng 11 đến tháng 4 năm sau, mùa mưa từ 
+                            tháng 5 đến tháng 10. Sương mù bao phủ vào sáng sớm tạo nên 
+                            khung cảnh thơ mộng, lãng mạn độc đáo.
+                        </p>
+                    </div>
+
+                    <!-- Culture Card -->
+                    <div class="about-card card-3d scroll-animate">
+                        <div class="about-card-header">
+                            <span class="about-icon">🎭</span>
+                            <h3>Văn Hóa & Con Người</h3>
+                        </div>
+                        <p>
+                            Đà Lạt là nơi hội tụ của nhiều dân tộc: Kinh, K'Ho, Churu, Mạ... 
+                            tạo nên một nền văn hóa đa dạng và phong phú. Con người Đà Lạt 
+                            hiền hòa, thân thiện và luôn chào đón du khách.
+                        </p>
+                        <p>
+                            Thành phố nổi tiếng với văn hóa cafe độc đáo, các lễ hội hoa 
+                            rực rỡ, chợ đêm sầm uất và đời sống nghệ thuật sôi động với 
+                            nhiều triển lãm, biểu diễn âm nhạc quanh năm.
+                        </p>
+                    </div>
+
+                    <!-- Nature Card -->
+                    <div class="about-card card-3d scroll-animate">
+                        <div class="about-card-header">
+                            <span class="about-icon">🌲</span>
+                            <h3>Thiên Nhiên Kỳ Thú</h3>
+                        </div>
+                        <p>
+                            Đà Lạt được bao quanh bởi những cánh rừng thосng xanh mướt, 
+                            thác nước hùng vĩ, hồ nước trong xanh và những đồi chè trải dài 
+                            bất tận tạo nên phong cảnh thiên nhiên tuyệt đẹp.
+                        </p>
+                        <p>
+                            Nổi bật nhất là Thung Lũng Tình Yêu, Hồ Xuân Hương, Thác Datanla, 
+                            Langbiang - ngọn núi cao nhất khu vực, và vô số vườn hoa 
+                            rực rỡ sắc màu quanh năm.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Image Placeholder -->
+                <!-- Replace with collage of Da Lat landmarks: Crazy House, train station, cathedral -->
+                <div class="about-image-placeholder scroll-animate">
+                    <div class="placeholder-content">
+                        <span class="placeholder-icon">🏛️🚂⛪</span>
+                        <p>Hình ảnh: Các địa danh nổi tiếng Đà Lạt</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section services-section">
+        <div class="container">
+            <h2 class="section-title scroll-animate">Dịch Vụ Du Lịch</h2>
+            <p class="section-subtitle scroll-animate">Trải nghiệm dịch vụ chất lượng cao cùng đội ngũ chuyên nghiệp</p>
+            
+            <div class="services-grid">
+                <!-- Tour Service -->
+                <div class="service-card card-3d scroll-animate">
+                    <div class="service-image-placeholder">
+                        <!-- Replace with tour group image -->
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">🚌</span>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Tour Du Lịch</h3>
+                        <p>Các gói tour đa dạng từ 1-5 ngày khám phá toàn bộ Đà Lạt</p>
+                        <ul class="service-features">
+                            <li>✓ Tour 1 ngày: Các điểm nổi tiếng</li>
+                            <li>✓ Tour 2-3 ngày: Trải nghiệm văn hóa</li>
+                            <li>✓ Tour 4-5 ngày: Khám phá chuyên sâu</li>
+                            <li>✓ Tour riêng theo yêu cầu</li>
+                        </ul>
+                        <div class="service-price">Từ 500.000đ/người</div>
+                        <button class="btn btn-service">Đặt Tour Ngay</button>
+                    </div>
+                </div>
+
+                <!-- Hotel Service -->
+                <div class="service-card card-3d scroll-animate">
+                    <div class="service-image-placeholder">
+                        <!-- Replace with hotel image -->
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">🏨</span>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Khách Sạn & Resort</h3>
+                        <p>Hệ thống khách sạn từ 3-5 sao với đầy đủ tiện nghi</p>
+                        <ul class="service-features">
+                            <li>✓ Khách sạn 3 sao giá tốt</li>
+                            <li>✓ Khách sạn 4 sao view đẹp</li>
+                            <li>✓ Resort 5 sao sang trọng</li>
+                            <li>✓ Phòng view hồ Xuân Hương</li>
+                        </ul>
+                        <div class="service-price">Từ 300.000đ/đêm</div>
+                        <button class="btn btn-service">Xem Phòng</button>
+                    </div>
+                </div>
+
+                <!-- Homestay Service -->
+                <div class="service-card card-3d scroll-animate">
+                    <div class="service-image-placeholder">
+                        <!-- Replace with homestay image -->
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">🏡</span>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Homestay Đà Lạt</h3>
+                        <p>Trải nghiệm văn hóa địa phương qua các homestay ấm cúng</p>
+                        <ul class="service-features">
+                            <li>✓ Homestay giữa rừng thông</li>
+                            <li>✓ Homestay view đồi chè</li>
+                            <li>✓ Homestay gần trung tâm</li>
+                            <li>✓ Homestay phong cách vintage</li>
+                        </ul>
+                        <div class="service-price">Từ 200.000đ/đêm</div>
+                        <button class="btn btn-service">Khám Phá</button>
+                    </div>
+                </div>
+
+                <!-- Car Rental Service -->
+                <div class="service-card card-3d scroll-animate">
+                    <div class="service-image-placeholder">
+                        <!-- Replace with car/motorbike rental image -->
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">🚗</span>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Thuê Xe Du Lịch</h3>
+                        <p>Dịch vụ cho thuê xe máy, ô tô tự lái và có tài xế</p>
+                        <ul class="service-features">
+                            <li>✓ Xe máy tự lái Honda, Yamaha</li>
+                            <li>✓ Ô tô 4-7 chỗ tự lái</li>
+                            <li>✓ Xe có tài xế theo giờ/ngày</li>
+                            <li>✓ Bảo hiểm đầy đủ</li>
+                        </ul>
+                        <div class="service-price">Từ 100.000đ/ngày</div>
+                        <button class="btn btn-service">Thuê Xe</button>
+                    </div>
+                </div>
+
+                <!-- Tour Guide Service -->
+                <div class="service-card card-3d scroll-animate">
+                    <div class="service-image-placeholder">
+                        <!-- Replace with tour guide image -->
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">👨‍🏫</span>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Hướng Dẫn Viên</h3>
+                        <p>Đội ngũ HDV nhiệt tình, am hiểu văn hóa và lịch sử địa phương</p>
+                        <ul class="service-features">
+                            <li>✓ HDV tiếng Việt chuyên nghiệp</li>
+                            <li>✓ HDV tiếng Anh, Hàn, Trung</li>
+                            <li>✓ Kiến thức sâu về Đà Lạt</li>
+                            <li>✓ Linh hoạt lịch trình</li>
+                        </ul>
+                        <div class="service-price">Từ 400.000đ/ngày</div>
+                        <button class="btn btn-service">Thuê HDV</button>
+                    </div>
+                </div>
+
+                <!-- Food Tour Service -->
+                <div class="service-card card-3d scroll-animate">
+                    <div class="service-image-placeholder">
+                        <!-- Replace with food image -->
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">🍲</span>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Tour Ẩm Thực</h3>
+                        <p>Khám phá nền ẩm thực độc đáo của Đà Lạt</p>
+                        <ul class="service-features">
+                            <li>✓ Bánh tráng nướng đặc sản</li>
+                            <li>✓ Lẩu gà lá é độc đáo</li>
+                            <li>✓ Nem nướng Đà Lạt</li>
+                            <li>✓ Tour cafe view đẹp</li>
+                        </ul>
+                        <div class="service-price">Từ 350.000đ/người</div>
+                        <button class="btn btn-service">Đặt Ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title scroll-animate">Liên Hệ Với Chúng Tôi</h2>
+            <p class="section-subtitle scroll-animate">Hãy để lại thông tin, chúng tôi sẽ liên hệ tư vấn miễn phí</p>
+            
+            <div class="contact-content">
+                <div class="contact-info scroll-animate">
+                    <div class="info-card card-3d">
+                        <div class="info-icon">📍</div>
+                        <h3>Địa Chỉ</h3>
+                        <p>123 Đường Trần Phú, Phường 4</p>
+                        <p>Thành phố Đà Lạt, Lâm Đồng</p>
+                    </div>
+                    
+                    <div class="info-card card-3d">
+                        <div class="info-icon">📞</div>
+                        <h3>Điện Thoại</h3>
+                        <p>Hotline: 0263.123.4567</p>
+                        <p>Di động: 0901.234.567</p>
+                    </div>
+                    
+                    <div class="info-card card-3d">
+                        <div class="info-icon">📧</div>
+                        <h3>Email</h3>
+                        <p>info@dalattravel.vn</p>
+                        <p>support@dalattravel.vn</p>
+                    </div>
+                    
+                    <div class="info-card card-3d">
+                        <div class="info-icon">🕐</div>
+                        <h3>Giờ Làm Việc</h3>
+                        <p>Thứ 2 - Thứ 7: 8:00 - 20:00</p>
+                        <p>Chủ Nhật: 8:00 - 18:00</p>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper scroll-animate">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Họ và Tên *</label>
+                            <input type="text" id="name" name="name" required placeholder="Nguyễn Văn A">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required placeholder="email@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Số Điện Thoại *</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="0901234567">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Dịch Vụ Quan Tâm</label>
+                            <select id="service" name="service">
+                                <option value="">-- Chọn dịch vụ --</option>
+                                <option value="tour">Tour Du Lịch</option>
+                                <option value="hotel">Khách Sạn</option>
+                                <option value="homestay">Homestay</option>
+                                <option value="car">Thuê Xe</option>
+                                <option value="guide">Hướng Dẫn Viên</option>
+                                <option value="food">Tour Ẩm Thực</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Nội Dung *</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Vui lòng nhập nội dung cần tư vấn..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-submit">
+                            Gửi Yêu Cầu
+                            <span class="btn-icon">✉️</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🌸 Đà Lạt Travel</h3>
+                    <p>Đồng hành cùng bạn khám phá thành phố ngàn hoa với những trải nghiệm đáng nhớ nhất.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📺</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Liên Kết Nhanh</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Trang Chủ</a></li>
+                        <li><a href="#about">Giới Thiệu</a></li>
+                        <li><a href="#services">Dịch Vụ</a></li>
+                        <li><a href="#contact">Liên Hệ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Dịch Vụ</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services">Tour Du Lịch</a></li>
+                        <li><a href="#services">Khách Sạn</a></li>
+                        <li><a href="#services">Homestay</a></li>
+                        <li><a href="#services">Thuê Xe</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Liên Hệ</h4>
+                    <ul class="footer-contact">
+                        <li>📍 123 Trần Phú, Đà Lạt</li>
+                        <li>📞 0263.123.4567</li>
+                        <li>📧 info@dalattravel.vn</li>
+                        <li>🕐 8:00 - 20:00 (T2-T7)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Đà Lạt Travel. Bản quyền thuộc về chúng tôi. | Thiết kế bởi Your Name</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">↑</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
