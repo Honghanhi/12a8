@@ -1,550 +1,599 @@
-// ==================== CUSTOM CURSOR ====================
-const cursor = document.querySelector('.cursor');
-const cursorFollower = document.querySelector('.cursor-follower');
+// ===== DỮ LIỆU SẢN PHẨM =====
+const productsData = [
+    {
+        id: 1,
+        name: "Smart TV QLED 4K 65 inch",
+        price: 25990000,
+        stock: 15,
+        rating: 4.8,
+        reviews: 342,
+        trend: "trending",
+        category: "Tivi",
+        description: "TV thông minh với công nghệ Quantum Dot, AI upscaling 4K, độ phân giải Ultra HD và hệ điều hành Tizen OS 7.0",
+        material: "Khung viền kim loại cao cấp, màn hình QLED",
+        origin: "Hàn Quốc",
+        brand: "Samsung",
+        technology: "Quantum Dot, AI Upscaling, HDR10+, Object Tracking Sound"
+    },
+    {
+        id: 2,
+        name: "Máy giặt AI EcoBubble 12kg",
+        price: 18500000,
+        stock: 8,
+        rating: 4.9,
+        reviews: 278,
+        trend: "popular",
+        category: "Máy giặt",
+        description: "Máy giặt cửa trước với công nghệ bọt khí AI, tiết kiệm điện năng A+++, giặt nhanh 15 phút",
+        material: "Thân máy inox, lồng giặt hợp kim titan",
+        origin: "Thái Lan",
+        brand: "Samsung",
+        technology: "EcoBubble AI, Digital Inverter, QuickDrive, SmartThings App"
+    },
+    {
+        id: 3,
+        name: "Máy rửa chén độc lập 14 bộ",
+        price: 16800000,
+        stock: 0,
+        rating: 4.7,
+        reviews: 156,
+        trend: "popular",
+        category: "Máy rửa chén",
+        description: "Máy rửa chén với 8 chương trình rửa tự động, công nghệ cảm biến thông minh, sấy khô hoàn hảo",
+        material: "Thép không gỉ 304, giỏ đựng cao cấp",
+        origin: "Đức",
+        brand: "Bosch",
+        technology: "PerfectDry, AquaSensor, LoadSensor, TimeLight"
+    },
+    {
+        id: 4,
+        name: "Bếp ga âm 5 lò hồng ngoại",
+        price: 8900000,
+        stock: 22,
+        rating: 4.6,
+        reviews: 423,
+        trend: "trending",
+        category: "Bếp ga",
+        description: "Bếp ga âm cao cấp với 5 lò công suất cao, đánh lửa IC tự động, mặt kính chịu nhiệt 8H",
+        material: "Mặt kính cường lực, vòng chia lửa đồng thau",
+        origin: "Việt Nam",
+        brand: "Rinnai",
+        technology: "Hồng ngoại siêu tiết kiệm, IC tự động, van an toàn chống rò rỉ"
+    },
+    {
+        id: 5,
+        name: "Nồi cơm điện tử IH 1.8L",
+        price: 4200000,
+        stock: 35,
+        rating: 4.9,
+        reviews: 892,
+        trend: "trending",
+        category: "Nồi cơm điện",
+        description: "Nồi cơm cao tần IH với 12 chương trình nấu, lòng niêu bền bỉ, giữ nhiệt 48 giờ",
+        material: "Lòng nồi hợp kim nhôm phủ kim cương 5 lớp",
+        origin: "Nhật Bản",
+        brand: "Panasonic",
+        technology: "IH cao tần, Fuzzy Logic AI, Diamond Fluorine Coating"
+    },
+    {
+        id: 6,
+        name: "Smart TV OLED 8K 77 inch",
+        price: 89900000,
+        stock: 3,
+        rating: 5.0,
+        reviews: 87,
+        trend: "trending",
+        category: "Tivi",
+        description: "TV OLED 8K cao cấp với độ tương phản vô hạn, công nghệ AI Picture Pro, âm thanh Dolby Atmos",
+        material: "Màn hình OLED tự phát sáng, khung viền siêu mỏng",
+        origin: "Hàn Quốc",
+        brand: "LG",
+        technology: "α9 Gen 6 AI Processor, OLED evo, webOS 23, ThinQ AI"
+    },
+    {
+        id: 7,
+        name: "Máy giặt sấy AI 10.5kg/7kg",
+        price: 32500000,
+        stock: 6,
+        rating: 4.8,
+        reviews: 164,
+        trend: "popular",
+        category: "Máy giặt",
+        description: "Máy giặt sấy kết hợp AI với chức năng hơi nước diệt khuẩn, sấy khô hoàn toàn, điều khiển từ xa",
+        material: "Thân máy cao cấp, lồng giặt inox 316",
+        origin: "Hàn Quốc",
+        brand: "LG",
+        technology: "AI DD, TurboWash 360, Steam Care, SmartThinQ"
+    },
+    {
+        id: 8,
+        name: "Máy rửa chén âm tủ 13 bộ",
+        price: 28900000,
+        stock: 4,
+        rating: 4.9,
+        reviews: 98,
+        trend: "popular",
+        category: "Máy rửa chén",
+        description: "Máy rửa chén âm tủ cao cấp với công nghệ Zeolith sấy khô tuyệt đối, tiêu thụ nước cực thấp",
+        material: "Thép không gỉ toàn bộ, khay rửa linh hoạt",
+        origin: "Đức",
+        brand: "Siemens",
+        technology: "Zeolith Drying, Home Connect, VarioSpeed Plus, AquaStop"
+    },
+    {
+        id: 9,
+        name: "Bếp từ đôi cảm ứng 4000W",
+        price: 5600000,
+        stock: 28,
+        rating: 4.7,
+        reviews: 567,
+        trend: "trending",
+        category: "Bếp ga",
+        description: "Bếp từ cao cấp với 2 vùng nấu linh hoạt, cảm ứng trượt điều khiển công suất, timer tự động tắt",
+        material: "Mặt kính Schott Ceran chịu nhiệt, khung thép không gỉ",
+        origin: "Malaysia",
+        brand: "Electrolux",
+        technology: "PowerBoost, FlexiBridge, Timer, Child Lock"
+    },
+    {
+        id: 10,
+        name: "Nồi cơm điện cao tần 1.5L",
+        price: 6800000,
+        stock: 18,
+        rating: 5.0,
+        reviews: 421,
+        trend: "trending",
+        category: "Nồi cơm điện",
+        description: "Nồi cơm cao tần cao cấp với 15 chương trình nấu tự động, công nghệ áp suất tối ưu hóa hạt cơm",
+        material: "Lòng nồi đồng nguyên chất 3 lớp chống dính",
+        origin: "Nhật Bản",
+        brand: "Zojirushi",
+        technology: "Pressure IH, Platinum Infused Nonstick, Umami Setting"
+    }
+];
 
-if (cursor && cursorFollower) {
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        
-        setTimeout(() => {
-            cursorFollower.style.left = e.clientX + 'px';
-            cursorFollower.style.top = e.clientY + 'px';
-        }, 100);
-    });
+// ===== BIẾN TOÀN CỤC =====
+let cart = [];
+let currentFilter = 'all';
+let currentSlide = 0;
 
-    // Cursor hover effect on interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-            cursor.style.background = 'rgba(74, 151, 130, 0.3)';
+// ===== KHỞI TẠO KHI LOAD TRANG =====
+document.addEventListener('DOMContentLoaded', function() {
+    initSpaceBackground();
+    renderFeaturedSlider();
+    renderProducts();
+    setupEventListeners();
+    updateCartCount();
+});
+
+// ===== NỀN VŨ TRỤ CÔNG NGHỆ VỚI GỢN SÓNG =====
+function initSpaceBackground() {
+    const canvas = document.getElementById('space-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Mảng lưu các ngôi sao
+    const stars = [];
+    for (let i = 0; i < 200; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 2,
+            speed: Math.random() * 0.5
         });
-        
-        el.addEventListener('mouseleave', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursor.style.background = 'transparent';
-        });
-    });
-}
-
-// ==================== NAVIGATION ====================
-const navbar = document.getElementById('navbar');
-const navLinks = document.querySelectorAll('.nav-link');
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('navMenu');
-
-// Navbar scroll effect
-if (navbar) {
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-}
-
-// Mobile menu toggle
-if (hamburger && navMenu) {
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-}
-
-// Active navigation link
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        navLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        
-        // Close mobile menu
-        if (window.innerWidth <= 768 && hamburger && navMenu) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    });
-});
-
-// Update active link on scroll
-window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('.section');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (scrollY >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// ==================== SMOOTH SCROLL ====================
-function scrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-// ==================== SCROLL ANIMATIONS ====================
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-        }
-    });
-}, observerOptions);
-
-const animatedElements = document.querySelectorAll('.scroll-animate');
-animatedElements.forEach(el => observer.observe(el));
-
-// ==================== 3D CARD TILT EFFECT ====================
-const cards3D = document.querySelectorAll('.card-3d');
-
-cards3D.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-    });
-});
-
-// ==================== BUTTON RIPPLE EFFECT ====================
-const buttons = document.querySelectorAll('.btn');
-
-buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
-    });
-});
-
-// Add ripple animation CSS dynamically
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = `
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.6);
-        transform: scale(0);
-        animation: ripple-animation 0.6s ease-out;
-        pointer-events: none;
     }
     
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(rippleStyle);
-
-// ==================== CONTACT FORM ====================
-const contactForm = document.getElementById('contactForm');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form values
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const service = document.getElementById('service').value;
-        const message = document.getElementById('message').value;
-        
-        // Validate form
-        if (!name || !email || !phone || !service || !message) {
-            alert('Vui lòng điền đầy đủ thông tin!');
-            return;
-        }
-        
-        // Simulate form submission
-        const submitBtn = contactForm.querySelector('.btn-submit');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = 'Đang gửi... ⏳';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            submitBtn.innerHTML = 'Gửi thành công! ✅';
-            submitBtn.style.background = '#4A9782';
-            
-            // Show success message
-            alert(`Cảm ơn ${name}! Chúng tôi đã nhận được yêu cầu của bạn và sẽ liên hệ qua email ${email} trong thời gian sớm nhất.`);
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Reset button
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                submitBtn.style.background = '';
-            }, 2000);
-        }, 1500);
-    });
-}
-
-// ==================== SCROLL TO TOP BUTTON ====================
-const scrollTopBtn = document.getElementById('scrollTop');
-
-if (scrollTopBtn) {
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            scrollTopBtn.classList.add('active');
-        } else {
-            scrollTopBtn.classList.remove('active');
-        }
-    });
-
-    scrollTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    // Mảng lưu các gợn sóng khi di chuột
+    const ripples = [];
+    
+    // Lắng nghe sự kiện di chuột
+    canvas.addEventListener('mousemove', function(e) {
+        ripples.push({
+            x: e.clientX,
+            y: e.clientY,
+            radius: 0,
+            maxRadius: 100,
+            alpha: 1
         });
     });
-}
-
-// ==================== PARALLAX EFFECT ====================
-window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const parallaxElements = document.querySelectorAll('.floating-shape');
     
-    parallaxElements.forEach((el, index) => {
-        const speed = (index + 1) * 0.05;
-        el.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
-
-// ==================== INTERACTIVE BACKGROUND ON MOUSE MOVE ====================
-const backgroundAnimation = document.querySelector('.background-animation');
-const floatingShapes = document.querySelectorAll('.floating-shape');
-
-if (backgroundAnimation) {
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    // Track mouse position
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    // Smooth animation loop
-    function animateShapes() {
-        // Smooth follow
-        currentX += (mouseX - currentX) * 0.05;
-        currentY += (mouseY - currentY) * 0.05;
-
-        floatingShapes.forEach((shape, index) => {
-            const speed = (index + 1) * 0.02;
-            const offsetX = (currentX - window.innerWidth / 2) * speed;
-            const offsetY = (currentY - window.innerHeight / 2) * speed;
+    // Animation loop
+    function animate() {
+        ctx.fillStyle = 'rgba(10, 14, 39, 0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Vẽ các ngôi sao
+        stars.forEach(star => {
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0, 240, 255, ${Math.random() * 0.5 + 0.5})`;
+            ctx.fill();
             
-            // Get current scroll offset
-            const scrolled = window.scrollY;
-            const scrollSpeed = (index + 1) * 0.05;
-            
-            // Combine mouse movement with existing scroll parallax
-            shape.style.transform = `translate(${offsetX}px, ${offsetY + scrolled * scrollSpeed}px) rotate(${offsetX * 0.1}deg)`;
-        });
-
-        requestAnimationFrame(animateShapes);
-    }
-
-    animateShapes();
-
-    // Create interactive particles on mouse move
-    let particleTimeout;
-    document.addEventListener('mousemove', (e) => {
-        clearTimeout(particleTimeout);
-        particleTimeout = setTimeout(() => {
-            createParticle(e.clientX, e.clientY);
-        }, 50);
-    });
-
-    function createParticle(x, y) {
-        const particle = document.createElement('div');
-        particle.className = 'mouse-particle';
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        
-        const colors = ['var(--primary)', 'var(--secondary)', 'var(--accent)'];
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-        
-        backgroundAnimation.appendChild(particle);
-
-        setTimeout(() => {
-            particle.remove();
-        }, 1000);
-    }
-
-    // Add particle styles
-    const particleStyle = document.createElement('style');
-    particleStyle.textContent = `
-        .mouse-particle {
-            position: fixed;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            animation: particleFade 1s ease-out forwards;
-            opacity: 0.6;
-        }
-        
-        @keyframes particleFade {
-            0% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0.6;
+            star.y += star.speed;
+            if (star.y > canvas.height) {
+                star.y = 0;
+                star.x = Math.random() * canvas.width;
             }
-            50% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.4;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
+        });
+        
+        // Vẽ các gợn sóng
+        for (let i = ripples.length - 1; i >= 0; i--) {
+            const ripple = ripples[i];
+            
+            ctx.beginPath();
+            ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(0, 240, 255, ${ripple.alpha})`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ripple.radius += 2;
+            ripple.alpha -= 0.02;
+            
+            if (ripple.alpha <= 0) {
+                ripples.splice(i, 1);
             }
         }
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    // Resize canvas khi thay đổi kích thước cửa sổ
+    window.addEventListener('resize', function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// ===== RENDER SLIDER SẢN PHẨM NỔI BẬT =====
+function renderFeaturedSlider() {
+    const slider = document.getElementById('slider');
+    const featuredProducts = productsData.filter(p => p.trend === 'trending').slice(0, 5);
+    
+    slider.innerHTML = featuredProducts.map(product => `
+        <div class="slider-item" onclick="showProductDetail(${product.id})">
+            <div class="slider-item-image">
+                <!-- Placeholder cho ảnh sản phẩm: ${product.name} -->
+            </div>
+            <h3>${product.name}</h3>
+            <div class="rating">⭐ ${product.rating} (${product.reviews} đánh giá)</div>
+            <div class="price">${formatPrice(product.price)}</div>
+            <button class="btn-3d" onclick="event.stopPropagation(); addToCart(${product.id})">
+                Thêm vào giỏ
+            </button>
+        </div>
+    `).join('');
+}
+
+// ===== ĐIỀU KHIỂN SLIDER =====
+function setupSliderControls() {
+    const slider = document.getElementById('slider');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    prevBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: -380, behavior: 'smooth' });
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: 380, behavior: 'smooth' });
+    });
+}
+
+// ===== RENDER DANH SÁCH SẢN PHẨM =====
+function renderProducts(filter = 'all') {
+    const grid = document.getElementById('products-grid');
+    let filteredProducts = productsData;
+    
+    if (filter === 'trending') {
+        filteredProducts = productsData.filter(p => p.trend === 'trending');
+    } else if (filter === 'popular') {
+        filteredProducts = productsData.filter(p => p.trend === 'popular');
+    } else if (filter === 'instock') {
+        filteredProducts = productsData.filter(p => p.stock > 0);
+    }
+    
+    grid.innerHTML = filteredProducts.map(product => {
+        const stockClass = product.stock > 0 ? 'in-stock' : 'out-of-stock';
+        const stockText = product.stock > 0 ? `Còn hàng: ${product.stock}` : 'Hết hàng';
+        const badge = product.trend === 'trending' ? 'BÁN CHẠY' : product.trend === 'popular' ? 'PHỔ BIẾN' : '';
+        
+        return `
+            <div class="product-card" data-id="${product.id}">
+                ${badge ? `<div class="product-badge">${badge}</div>` : ''}
+                <div class="product-image">
+                    <!-- Placeholder: Ảnh ${product.name} -->
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    <div class="product-price">${formatPrice(product.price)}</div>
+                    <div class="product-rating">⭐ ${product.rating} (${product.reviews} đánh giá)</div>
+                    <div class="product-stock ${stockClass}">${stockText}</div>
+                    <div class="product-actions">
+                        <button class="btn-view" onclick="showProductDetail(${product.id})">Xem chi tiết</button>
+                        <button class="btn-add-cart" onclick="addToCart(${product.id})" ${product.stock === 0 ? 'disabled' : ''}>
+                            Thêm giỏ hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ===== HIỂN THI CHI TIẾT SẢN PHẨM =====
+function showProductDetail(productId) {
+    const product = productsData.find(p => p.id === productId);
+    if (!product) return;
+    
+    const modal = document.getElementById('product-modal');
+    const modalBody = document.getElementById('modal-body');
+    
+    const stockClass = product.stock > 0 ? 'in-stock' : 'out-of-stock';
+    const stockText = product.stock > 0 ? `Còn hàng: ${product.stock}` : 'Hết hàng';
+    
+    modalBody.innerHTML = `
+        <div class="detail-image">
+            <!-- Placeholder: Ảnh chi tiết ${product.name} -->
+        </div>
+        <div class="detail-info">
+            <h2>${product.name}</h2>
+            <div class="product-rating">⭐ ${product.rating} (${product.reviews} đánh giá)</div>
+            <div class="detail-price">${formatPrice(product.price)}</div>
+            <div class="product-stock ${stockClass}">${stockText}</div>
+            
+            <div class="detail-section">
+                <h4>Mô tả sản phẩm</h4>
+                <p>${product.description}</p>
+            </div>
+            
+            <div class="detail-section">
+                <h4>Thông số kỹ thuật</h4>
+                <p><strong>Chất liệu:</strong> ${product.material}</p>
+                <p><strong>Xuất xứ:</strong> ${product.origin}</p>
+                <p><strong>Hãng sản xuất:</strong> ${product.brand}</p>
+            </div>
+            
+            <div class="detail-section">
+                <h4>Công nghệ nổi bật</h4>
+                <p>${product.technology}</p>
+            </div>
+            
+            <div class="detail-actions">
+                <button class="btn-3d" onclick="addToCart(${product.id}); closeModal('product-modal')" ${product.stock === 0 ? 'disabled' : ''}>
+                    Thêm vào giỏ hàng
+                </button>
+            </div>
+        </div>
     `;
-    document.head.appendChild(particleStyle);
-}
-
-// ==================== SERVICE CARDS INTERACTION ====================
-const serviceCards = document.querySelectorAll('.service-card');
-
-serviceCards.forEach(card => {
-    const btn = card.querySelector('.btn-service');
     
-    if (btn) {
-        btn.addEventListener('click', function() {
-            const serviceName = card.querySelector('h3').textContent;
-            alert(`Bạn đã chọn dịch vụ: ${serviceName}\n\nVui lòng liên hệ hotline 0263.123.4567 hoặc điền form bên dưới để được tư vấn chi tiết!`);
-        });
-    }
-});
-
-// ==================== FLOATING ANIMATION FOR FEATURE CARDS ====================
-const featureCards = document.querySelectorAll('.feature-card');
-
-featureCards.forEach((card, index) => {
-    card.style.animationDelay = `${index * 0.2}s`;
-    card.style.animation = 'floatCard 3s ease-in-out infinite';
-});
-
-// Add floating animation
-const floatStyle = document.createElement('style');
-floatStyle.textContent = `
-    @keyframes floatCard {
-        0%, 100% {
-            transform: translateY(0px);
-        }
-        50% {
-            transform: translateY(-10px);
-        }
-    }
-`;
-document.head.appendChild(floatStyle);
-
-// ==================== DYNAMIC TEXT TYPING EFFECT ====================
-const heroSubtitle = document.querySelector('.hero-subtitle');
-
-if (heroSubtitle) {
-    const originalText = heroSubtitle.textContent;
-    heroSubtitle.textContent = '';
-
-    let charIndex = 0;
-    function typeText() {
-        if (charIndex < originalText.length) {
-            heroSubtitle.textContent += originalText.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeText, 100);
-        }
-    }
-
-    // Start typing effect after page load
-    window.addEventListener('load', () => {
-        setTimeout(typeText, 500);
-    });
+    modal.style.display = 'block';
 }
 
-// ==================== FORM VALIDATION ====================
-const inputs = document.querySelectorAll('input, textarea, select');
-
-inputs.forEach(input => {
-    input.addEventListener('blur', function() {
-        if (this.value.trim() === '' && this.hasAttribute('required')) {
-            this.style.borderColor = '#ff6b6b';
+// ===== THÊM SẢN PHẨM VÀO GIỎ HÀNG =====
+function addToCart(productId) {
+    const product = productsData.find(p => p.id === productId);
+    if (!product || product.stock === 0) return;
+    
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if (existingItem) {
+        if (existingItem.quantity < product.stock) {
+            existingItem.quantity++;
+            showSuccessMessage('Đã tăng số lượng sản phẩm trong giỏ hàng!');
         } else {
-            this.style.borderColor = '';
+            showSuccessMessage('Số lượng sản phẩm đã đạt tối đa!');
         }
-    });
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: 1,
+            maxStock: product.stock
+        });
+        showSuccessMessage('Đã thêm sản phẩm vào giỏ hàng!');
+    }
     
-    input.addEventListener('focus', function() {
-        this.style.borderColor = '#4A9782';
-    });
-});
-
-// Email validation
-const emailInput = document.getElementById('email');
-if (emailInput) {
-    emailInput.addEventListener('blur', function() {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(this.value) && this.value.trim() !== '') {
-            this.style.borderColor = '#ff6b6b';
-            // You can add a custom error message here
-        }
-    });
+    updateCartCount();
 }
 
-// Phone validation
-const phoneInput = document.getElementById('phone');
-if (phoneInput) {
-    phoneInput.addEventListener('blur', function() {
-        const phonePattern = /^[0-9]{10,11}$/;
-        if (!phonePattern.test(this.value.replace(/\s/g, '')) && this.value.trim() !== '') {
-            this.style.borderColor = '#ff6b6b';
-        }
-    });
+// ===== HIỂN THỊ GIỎ HÀNG =====
+function showCart() {
+    const modal = document.getElementById('cart-modal');
+    const cartItems = document.getElementById('cart-items');
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<div class="empty-cart">Giỏ hàng của bạn đang trống</div>';
+    } else {
+        cartItems.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-image">
+                    <!-- Ảnh ${item.name} -->
+                </div>
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <div class="cart-item-price">${formatPrice(item.price)}</div>
+                    <div class="cart-item-controls">
+                        <button class="qty-btn" onclick="decreaseQuantity(${item.id})">-</button>
+                        <span class="qty-display">${item.quantity}</span>
+                        <button class="qty-btn" onclick="increaseQuantity(${item.id})">+</button>
+                        <button class="btn-remove" onclick="removeFromCart(${item.id})">Xóa</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    updateCartTotal();
+    modal.style.display = 'block';
 }
 
-// ==================== PERFORMANCE OPTIMIZATION ====================
-// Lazy loading for images
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                    imageObserver.unobserve(img);
-                }
-            }
+// ===== TĂNG SỐ LƯỢNG SẢN PHẨM =====
+function increaseQuantity(productId) {
+    const item = cart.find(i => i.id === productId);
+    if (item && item.quantity < item.maxStock) {
+        item.quantity++;
+        showCart();
+        updateCartCount();
+    } else {
+        showSuccessMessage('Đã đạt số lượng tối đa!');
+    }
+}
+
+// ===== GIẢM SỐ LƯỢNG SẢN PHẨM =====
+function decreaseQuantity(productId) {
+    const item = cart.find(i => i.id === productId);
+    if (item && item.quantity > 1) {
+        item.quantity--;
+        showCart();
+        updateCartCount();
+    }
+}
+
+// ===== XÓA SẢN PHẨM KHỎI GIỎ =====
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    showCart();
+    updateCartCount();
+    showSuccessMessage('Đã xóa sản phẩm khỏi giỏ hàng!');
+}
+
+// ===== CẬP NHẬT SỐ LƯỢNG GIỎ HÀNG =====
+function updateCartCount() {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.querySelector('.cart-count').textContent = count;
+}
+
+// ===== CẬP NHẬT TỔNG TIỀN =====
+function updateCartTotal() {
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    document.getElementById('cart-total').textContent = formatPrice(total);
+}
+
+// ===== THANH TOÁN =====
+function checkout() {
+    if (cart.length === 0) {
+        showSuccessMessage('Giỏ hàng của bạn đang trống!');
+        return;
+    }
+    
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const message = `Đặt hàng thành công!\n\nTổng tiền: ${formatPrice(total)}\nSố sản phẩm: ${cart.length}\n\nCảm ơn bạn đã mua hàng tại Tech Home!`;
+    
+    // Giả lập đặt hàng thành công
+    cart = [];
+    updateCartCount();
+    closeModal('cart-modal');
+    
+    // Hiển thị thông báo
+    setTimeout(() => {
+        showSuccessMessage(message);
+    }, 300);
+}
+
+// ===== ĐÓNG MODAL =====
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// ===== HIỂN THỊ THÔNG BÁO THÀNH CÔNG =====
+function showSuccessMessage(message) {
+    const modal = document.getElementById('success-modal');
+    document.getElementById('success-message').textContent = message;
+    modal.style.display = 'block';
+}
+
+function closeSuccessModal() {
+    document.getElementById('success-modal').style.display = 'none';
+}
+
+// ===== FORMAT GIÁ TIỀN =====
+function formatPrice(price) {
+    return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    }).format(price);
+}
+
+// ===== SCROLL ĐẾN PHẦN SẢN PHẨM =====
+function scrollToProducts() {
+    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== THIẾT LẬP CÁC EVENT LISTENERS =====
+function setupEventListeners() {
+    // Nút đóng modal
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none';
         });
     });
     
-    // Observe images with data-src attribute
-    document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
-}
-
-// ==================== EASTER EGG ====================
-let clickCount = 0;
-const logo = document.querySelector('.logo');
-
-if (logo) {
-    logo.addEventListener('click', () => {
-        clickCount++;
-        if (clickCount === 5) {
-            alert('🎉 Chúc mừng! Bạn đã khám phá được Easter Egg! Nhập mã "DALAT2025" khi đặt tour để được giảm giá 10%! 🎉');
-            clickCount = 0;
+    // Click ngoài modal để đóng
+    window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) {
+            e.target.style.display = 'none';
         }
     });
-}
-
-// ==================== CONSOLE WELCOME MESSAGE ====================
-console.log('%c🌸 Chào mừng đến với Đà Lạt Travel! 🌸', 'color: #4A9782; font-size: 20px; font-weight: bold;');
-console.log('%cWebsite được thiết kế với ❤️ bởi đội ngũ phát triển chuyên nghiệp', 'color: #666; font-size: 12px;');
-console.log('%c💡 Tip: Click vào logo 5 lần để nhận mã giảm giá!', 'color: #FFA500; font-size: 14px;');
-
-// ==================== ADDITIONAL FEATURES ====================
-
-// Prevent default behavior for demo buttons
-document.addEventListener('DOMContentLoaded', () => {
-    const demoLinks = document.querySelectorAll('a[href="#"]');
-    demoLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
+    
+    // Nút giỏ hàng
+    document.getElementById('cart-btn').addEventListener('click', showCart);
+    
+    // Nút thanh toán
+    document.getElementById('checkout-btn').addEventListener('click', checkout);
+    
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const filter = this.getAttribute('data-filter');
+            renderProducts(filter);
         });
     });
-});
-
-// Smooth scroll for all anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== '#' && href.length > 1) {
+    
+    // Navigation smooth scroll
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(href);
+            const targetId = this.getAttribute('href');
+            const target = document.querySelector(targetId);
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                target.scrollIntoView({ behavior: 'smooth' });
+                
+                // Update active nav
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
             }
-        }
+        });
     });
-});
-
-// Add loading animation on page load
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-
-// Debounce function for performance
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+    
+    // Slider controls
+    setupSliderControls();
+    
+    // Contact form
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        showSuccessMessage('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong 24h.');
+        this.reset();
+    });
+    
+    // Scroll effect for header
+    let lastScroll = 0;
+    window.addEventListener('scroll', function() {
+        const header = document.getElementById('header');
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            header.style.transform = 'translateY(-100%)';
+        } else {
+            header.style.transform = 'translateY(0)';
+        }
+        
+        lastScroll = currentScroll;
+    });
 }
-
-// Optimize scroll events with debounce
-const optimizedScroll = debounce(() => {
-    // Add any heavy scroll calculations here
-}, 100);
-
-window.addEventListener('scroll', optimizedScroll);
-
-// ==================== END OF SCRIPT ====================
