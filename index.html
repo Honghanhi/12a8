@@ -59,21 +59,153 @@
         </div>
     </section>
 
-    <!-- Products Grid -->
-    <section id="products" class="products-section">
+    <!-- Chọn sản phẩm theo nhu cầu -->
+    <section class="needs-selector-section">
+        <div class="container">
+            <h2 class="section-title">Chọn sản phẩm theo nhu cầu của bạn</h2>
+            <p class="section-subtitle">Khám phá những sản phẩm phù hợp nhất với không gian và nhu cầu của gia đình bạn</p>
+            
+            <div class="needs-grid">
+                <div class="need-card" onclick="filterByNeed('living-room')">
+                    <div class="need-icon">🛋️</div>
+                    <h3>Phòng khách</h3>
+                    <p>TV thông minh, hệ thống âm thanh, loa thông minh</p>
+                    <span class="need-count" id="count-living-room">(0 sản phẩm)</span>
+                </div>
+                
+                <div class="need-card" onclick="filterByNeed('kitchen')">
+                    <div class="need-icon">🍳</div>
+                    <h3>Nhà bếp</h3>
+                    <p>Bếp thông minh, máy rửa chén, nồi cơm điện</p>
+                    <span class="need-count" id="count-kitchen">(0 sản phẩm)</span>
+                </div>
+                
+                <div class="need-card" onclick="filterByNeed('laundry')">
+                    <div class="need-icon">👔</div>
+                    <h3>Giặc ủi</h3>
+                    <p>Máy giặt AI, máy sấy thông minh</p>
+                    <span class="need-count" id="count-laundry">(0 sản phẩm)</span>
+                </div>
+                
+                <div class="need-card" onclick="filterByNeed('bedroom')">
+                    <div class="need-icon">🛏️</div>
+                    <h3>Phòng ngủ</h3>
+                    <p>Đèn thông minh, máy lạnh, máy tạo độ ẩm</p>
+                    <span class="need-count" id="count-bedroom">(0 sản phẩm)</span>
+                </div>
+                
+                <div class="need-card" onclick="filterByNeed('health')">
+                    <div class="need-icon">❤️</div>
+                    <h3>Sức khỏe</h3>
+                    <p>Các thiết bị chăm sóc sức khỏe gia đình</p>
+                    <span class="need-count" id="count-health">(0 sản phẩm)</span>
+                </div>
+                
+                <div class="need-card" onclick="filterByNeed('entertainment')">
+                    <div class="need-icon">🎮</div>
+                    <h3>Giải trí</h3>
+                    <p>Hệ thống âm thanh cao cấp, TV OLED 8K</p>
+                    <span class="need-count" id="count-entertainment">(0 sản phẩm)</span>
+                </div>
+            </div>
+            
+            <button class="btn-view-all-products" onclick="showAllProducts()" style="margin-top: 20px;">
+                Xem tất cả sản phẩm
+            </button>
+        </div>
+    </section>
+
+    <!-- Danh sách sản phẩm theo loại -->
+    <section class="categories-section">
         <div class="container">
             <h2 class="section-title">Danh sách sản phẩm</h2>
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">Tất cả</button>
-                <button class="filter-btn" data-filter="trending">Bán chạy</button>
-                <button class="filter-btn" data-filter="popular">Phổ biến</button>
-                <button class="filter-btn" data-filter="instock">Còn hàng</button>
+            <p class="section-subtitle">Chọn loại sản phẩm bạn quan tâm</p>
+            
+            <div class="categories-grid" id="categories-grid">
+                <!-- Danh mục sản phẩm được tạo động từ JS -->
             </div>
+        </div>
+    </section>
+
+    <section id="products" class="products-section">
+        <div class="container">
+            <h2 class="section-title" id="products-title">Danh sách sản phẩm</h2>
+            
+            <!-- Nút mở bộ lọc nâng cao và so sánh -->
+            <div class="filter-toolbar">
+                <button class="btn-filter-toggle" id="filter-toggle-btn" title="Bộ lọc nâng cao">
+                    ⚙️ Lọc nâng cao
+                </button>
+                <button class="btn-compare" id="compare-btn" title="So sánh sản phẩm">
+                    📊 So sánh <span class="compare-count">(0)</span>
+                </button>
+            </div>
+            
+            <!-- Bộ lọc nâng cao (ẩn mặc định) -->
+            <div class="advanced-filter" id="advanced-filter" style="display: none;">
+                <div class="filter-section">
+                    <h4>Danh mục</h4>
+                    <div class="filter-btns">
+                        <button class="filter-btn active" data-filter="all">Tất cả</button>
+                        <button class="filter-btn" data-filter="trending">Bán chạy</button>
+                        <button class="filter-btn" data-filter="popular">Phổ biến</button>
+                        <button class="filter-btn" data-filter="instock">Còn hàng</button>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h4>Giá tiền (VNĐ)</h4>
+                    <div class="price-range">
+                        <input type="range" id="price-min" min="0" max="100000000" value="0" class="price-slider">
+                        <input type="range" id="price-max" min="0" max="100000000" value="100000000" class="price-slider">
+                        <div class="price-display">
+                            <span id="price-min-val">0đ</span> - <span id="price-max-val">100,000,000đ</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h4>Đánh giá</h4>
+                    <div class="rating-filter">
+                        <label><input type="checkbox" class="rating-checkbox" value="5"> ⭐⭐⭐⭐⭐ 5 sao</label>
+                        <label><input type="checkbox" class="rating-checkbox" value="4"> ⭐⭐⭐⭐ 4 sao trở lên</label>
+                        <label><input type="checkbox" class="rating-checkbox" value="3"> ⭐⭐⭐ 3 sao trở lên</label>
+                        <label><input type="checkbox" class="rating-checkbox" value="2"> ⭐⭐ 2 sao trở lên</label>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h4>Thương hiệu</h4>
+                    <div class="brand-filter" id="brand-filter">
+                        <!-- Danh sách thương hiệu được tạo động từ JS -->
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button class="btn-reset-filter" id="reset-filter-btn">Đặt lại</button>
+                    <button class="btn-apply-filter" id="apply-filter-btn">Áp dụng</button>
+                </div>
+            </div>
+            
             <div class="products-grid" id="products-grid">
                 <!-- Products được tạo động từ JS -->
             </div>
         </div>
     </section>
+
+    <!-- Compare Products Modal -->
+    <div id="compare-modal" class="modal">
+        <div class="modal-content compare-modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>So sánh sản phẩm</h2>
+            <div class="compare-container" id="compare-container">
+                <!-- Sản phẩm được so sánh được tạo động -->
+            </div>
+            <div class="compare-actions">
+                <button class="btn-clear-compare" id="clear-compare-btn">Xóa tất cả</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Product Detail Modal -->
     <div id="product-modal" class="modal">
