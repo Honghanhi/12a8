@@ -1,5 +1,43 @@
 // ===== DỮ LIỆU SẢN PHẨM - KHÔNG CÓ TRƯỜNG IMAGE =====
 // Tự động dùng: images/product-{id}.jpg
+
+// ===== NOTIFICATION SYSTEM =====
+function showNotification(title, message, type = 'success', duration = 3000) {
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    
+    const icons = {
+        success: '✓',
+        checkout: '🛒',
+        error: '✕'
+    };
+    
+    notification.innerHTML = `
+        <div class="notification-icon">${icons[type]}</div>
+        <div class="notification-content">
+            <div class="notification-title">${title}</div>
+            <div class="notification-message">${message}</div>
+            <div class="notification-progress">
+                <div class="notification-progress-bar"></div>
+            </div>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    
+    container.appendChild(notification);
+    
+    // Tự động xóa sau duration
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.classList.add('removing');
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, duration);
+}
+
 const productsData = [
     {
         id: 1,
@@ -332,6 +370,7 @@ let priceMin = 0;
 let priceMax = 100000000;
 let selectedRatings = [];
 let selectedBrands = [];
+let addToCartInProgress = new Set(); // Debounce để tránh click nhiều lần
 
 // ===== KHỞI TẠO =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -377,7 +416,7 @@ function renderProducts(filter = 'all') {
                     <img src="${imageUrl}" 
                          alt="${product.name}" 
                          class="product-image-img"
-                         onerror="this.src='https://via.placeholder.com/200x200?text=' + encodeURIComponent('${product.name}')"
+                         onerror="this.src='https://dummyimage.com/200x200?text=' + encodeURIComponent('${product.name}')"
                     >
                 </div>
                 <div class="product-info">
@@ -388,7 +427,7 @@ function renderProducts(filter = 'all') {
                     <div class="product-brand">🏷️ ${product.brand}</div>
                     <div class="product-actions">
                         <button class="btn-view" onclick="showProductDetail(${product.id})">Xem chi tiết</button>
-                        <button class="btn-add-cart" onclick="addToCart(${product.id})" ${product.stock === 0 ? 'disabled' : ''}>
+                        <button class="btn-add-cart" onclick="addToCart(${product.id}, this)" ${product.stock === 0 ? 'disabled' : ''}>
                             Thêm giỏ hàng
                         </button>
                     </div>
@@ -410,13 +449,13 @@ function renderFeaturedSlider() {
             <div class="slider-item-image">
                 <img src="images/product-${product.id}.jpg" 
                      alt="${product.name}"
-                     onerror="this.src='https://via.placeholder.com/200x200?text=' + encodeURIComponent('${product.name}')"
+                     onerror="this.src='https://dummyimage.com/200x200?text=' + encodeURIComponent('${product.name}')"
                 >
             </div>
             <h3>${product.name}</h3>
             <div class="rating">⭐ ${product.rating}</div>
             <div class="price">${formatPrice(product.price)}</div>
-            <button class="btn-3d" onclick="event.stopPropagation(); addToCart(${product.id})">
+            <button class="btn-3d" onclick="event.stopPropagation(); addToCart(${product.id}, this)">
                 Thêm vào giỏ
             </button>
         </div>
@@ -429,12 +468,34 @@ function formatPrice(price) {
 }
 
 // ===== THÊM VÀO GIỎ =====
-function addToCart(productId) {
+function addToCart(productId, button = null) {
     const product = productsData.find(p => p.id === productId);
-    if (product && product.stock > 0) {
-        cart.push(product);
-        updateCartCount();
-        alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
+    
+    // Validation
+    if (!product) {
+        showNotification('Lỗi', 'Sản phẩm không tồn tại!', 'error');
+        return;
+    }
+    
+    if (product.stock <= 0) {
+        showNotification('Hết hàng', `"${product.name}" hiện đã hết hàng!`, 'error');
+        return;
+    }
+    
+    // Add to cart immediately
+    cart.push(product);
+    updateCartCount();
+    showNotification('Thêm sản phẩm', `"${product.name}" đã được thêm vào giỏ hàng!`, 'success');
+    
+    // Optional: disable button briefly for visual feedback
+    if (button) {
+        button.disabled = true;
+        button.style.opacity = '0.6';
+        
+        setTimeout(() => {
+            button.disabled = false;
+            button.style.opacity = '1';
+        }, 500);
     }
 }
 
@@ -449,9 +510,77 @@ function updateCartCount() {
 // ===== XEM CHI TIẾT =====
 function showProductDetail(productId) {
     const product = productsData.find(p => p.id === productId);
-    if (product) {
-        alert(`${product.name}\nGiá: ${formatPrice(product.price)}\nĐánh giá: ⭐${product.rating}`);
-    }
+    if (!product) return;
+    
+    const modal = document.getElementById('product-modal');
+    const modalBody = document.getElementById('modal-body');
+    
+    const imageUrl = `images/product-${product.id}.jpg`;
+    const stockClass = product.stock > 0 ? 'in-stock' : 'out-of-stock';
+    const stockText = product.stock > 0 ? `✓ Còn hàng: ${product.stock}` : '✕ Hết hàng';
+    const stockBadge = product.stock > 0 ? '' : 'disabled';
+    
+    modalBody.innerHTML = `
+        <div class="detail-container">
+            <div class="detail-image-section">
+                <div class="detail-image-wrapper">
+                    <img src="${imageUrl}" 
+                         alt="${product.name}" 
+                         class="detail-image-large"
+                         onerror="this.src='https://dummyimage.com/400x400?text=' + encodeURIComponent('${product.name}')"
+                    >
+                </div>
+                <div class="detail-stock ${stockClass}">${stockText}</div>
+            </div>
+            
+            <div class="detail-info-section">
+                <div class="detail-header">
+                    <h2>${product.name}</h2>
+                    <div class="detail-brand">🏷️ ${product.brand}</div>
+                </div>
+                
+                <div class="detail-price-section">
+                    <div class="detail-price">${formatPrice(product.price)}</div>
+                    <div class="detail-rating">⭐ ${product.rating} (${product.reviews} đánh giá)</div>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>📝 Mô tả sản phẩm</h4>
+                    <p>${product.description}</p>
+                </div>
+                
+                <div class="detail-specs">
+                    <div class="detail-section">
+                        <h4>📍 Nơi sản xuất</h4>
+                        <p class="spec-value">${product.origin}</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h4>🔧 Chất liệu</h4>
+                        <p class="spec-value">${product.material}</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h4>⚙️ Công nghệ được sử dụng</h4>
+                        <div class="tech-list">
+                            ${product.technology.split(', ').map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-actions">
+                    <button class="btn-3d" onclick="addToCart(${product.id}, this)" ${product.stock === 0 ? 'disabled' : ''}>
+                        🛒 Thêm vào giỏ hàng
+                    </button>
+                    <button class="btn-3d btn-close-modal" onclick="document.getElementById('product-modal').style.display='none'">
+                        ✕ Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    modal.style.display = 'block';
 }
 
 // ===== FILTER THEO NHU CẦU =====
@@ -471,7 +600,7 @@ function filterByNeed(need) {
                         <img src="${imageUrl}" 
                              alt="${product.name}" 
                              class="product-image-img"
-                             onerror="this.src='https://via.placeholder.com/200x200?text=' + encodeURIComponent('${product.name}')"
+                             onerror="this.src='https://dummyimage.com/200x200?text=' + encodeURIComponent('${product.name}')"
                         >
                     </div>
                     <div class="product-info">
@@ -480,7 +609,7 @@ function filterByNeed(need) {
                         <div class="product-rating">⭐ ${product.rating}</div>
                         <div class="product-stock ${stockClass}">${stockText}</div>
                         <div class="product-actions">
-                            <button class="btn-add-cart" onclick="addToCart(${product.id})">Thêm giỏ</button>
+                            <button class="btn-add-cart" onclick="addToCart(${product.id}, this)">Thêm giỏ</button>
                         </div>
                     </div>
                 </div>
@@ -511,7 +640,7 @@ function filterByCategory(category) {
                         <img src="${imageUrl}" 
                              alt="${product.name}" 
                              class="product-image-img"
-                             onerror="this.src='https://via.placeholder.com/200x200?text=' + encodeURIComponent('${product.name}')"
+                             onerror="this.src='https://dummyimage.com/200x200?text=' + encodeURIComponent('${product.name}')"
                         >
                     </div>
                     <div class="product-info">
@@ -520,7 +649,7 @@ function filterByCategory(category) {
                         <div class="product-rating">⭐ ${product.rating}</div>
                         <div class="product-stock ${stockClass}">${stockText}</div>
                         <div class="product-actions">
-                            <button class="btn-add-cart" onclick="addToCart(${product.id})">Thêm giỏ</button>
+                            <button class="btn-add-cart" onclick="addToCart(${product.id}, this)">Thêm giỏ</button>
                         </div>
                     </div>
                 </div>
@@ -567,6 +696,11 @@ function setupEventListeners() {
         cartBtn.addEventListener('click', showCart);
     }
     
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', checkout);
+    }
+    
     const filterToggle = document.getElementById('filter-toggle-btn');
     if (filterToggle) {
         filterToggle.addEventListener('click', () => {
@@ -592,11 +726,23 @@ function showCart() {
     
     const cartItems = document.getElementById('cart-items');
     if (cartItems) {
-        cartItems.innerHTML = cart.map((item, index) => `
-            <div style="padding: 10px; border: 1px solid #ddd; margin: 5px 0;">
-                ${item.name} - ${formatPrice(item.price)}
-            </div>
-        `).join('');
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<p>Giỏ hàng trống</p>';
+        } else {
+            cartItems.innerHTML = cart.map((item, index) => `
+                <div>
+                    <span>${item.name} - ${formatPrice(item.price)}</span>
+                    <button onclick="removeFromCart(${index})">Xóa</button>
+                </div>
+            `).join('');
+        }
+    }
+    
+    // Tính tổng giá trị giỏ hàng
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const cartTotal = document.getElementById('cart-total');
+    if (cartTotal) {
+        cartTotal.textContent = formatPrice(total);
     }
     
     modal.style.display = 'block';
@@ -605,6 +751,40 @@ function showCart() {
 // ===== SLIDER FUNCTIONALITY =====
 let currentSlideIndex = 0;
 let sliderAutoScrollInterval;
+
+function removeFromCart(index) {
+    if (index >= 0 && index < cart.length) {
+        const removedItem = cart.splice(index, 1);
+        updateCartCount();
+        showCart(); // Cập nhật lại hiển thị giỏ hàng
+        showNotification('Xóa sản phẩm', `"${removedItem[0].name}" đã bị xóa khỏi giỏ hàng!`, 'success');
+    }
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        showNotification('Giỏ hàng trống', 'Vui lòng thêm sản phẩm trước khi thanh toán!', 'error');
+        return;
+    }
+    
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const itemList = cart.map(item => `• ${item.name}: ${formatPrice(item.price)}`).join('\n');
+    
+    showNotification(
+        '✨ Thanh toán thành công!', 
+        `Đơn hàng của bạn:\n${itemList}\n\nTổng tiền: ${formatPrice(total)}\n\nCảm ơn bạn đã mua sắm tại TECH HOME!`, 
+        'checkout', 
+        4000
+    );
+    
+    // Xóa giỏ hàng sau khi thanh toán thành công
+    cart = [];
+    updateCartCount();
+    const modal = document.getElementById('cart-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+// ===== SLIDER FUNCTIONALITY =====
 
 function initSlider() {
     const prevBtn = document.getElementById('prev-btn');
